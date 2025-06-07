@@ -1,0 +1,274 @@
+alias: Update eInk Display - Weather Forecast - TAG_POSITION
+triggers:
+  - minutes: /30
+    trigger: time_pattern
+conditions:
+  - condition: time
+    after: "06:00:00"
+    before: "23:59:59"
+actions:
+  - data:
+      device_id: YOUR_DEVICE_ID
+      background: white
+      rotate: 0
+      dry-run: false
+      payload:
+        - type: text
+          value: ROOM1
+          x: 130
+          "y": 5
+          size: 22
+          color: black
+        - type: icon
+          value: battery
+          x: 340
+          "y": 4
+          size: 18
+          color: black
+        - type: text
+          value: "{{ states('sensor.YOUR_ESL_MAC_BATTERY_SENSOR_NAME') }}%"
+          x: 357
+          "y": 8
+          size: 16
+          color: black
+        - type: line
+          x_start: 0
+          y_start: 30
+          x_end: 400
+          y_end: 30
+          color: black
+        - type: line
+          x_start: 200
+          y_start: 30
+          x_end: 200
+          y_end: 295
+          color: black
+          dashed: true
+        - type: line
+          x_start: 200
+          y_start: 110
+          x_end: 400
+          y_end: 110
+          color: black
+          dashed: true
+        - type: line
+          x_start: 200
+          y_start: 190
+          x_end: 400
+          y_end: 190
+          color: black
+          dashed: true
+        - type: icon
+          value: thermometer-lines
+          x: 5
+          "y": 40
+          size: 28
+          color: black
+        - type: text
+          value: "{{ states('sensor.YOUR_TEMP_SENSOR_IN_THAT_ROOM') }}°C"
+          x: 50
+          "y": 45
+          size: 26
+          color: red
+        - type: icon
+          value: water-percent
+          x: 5
+          "y": 75
+          size: 28
+          color: black
+        - type: text
+          value: "{{ states('sensor.YOUR_HUMIDITY_SENSOR_IN_THAT_ROOM') }}%"
+          x: 50
+          "y": 80
+          size: 26
+          color: red
+        - type: line
+          x_start: 0
+          y_start: 110
+          x_end: 200
+          y_end: 110
+          color: black
+          dashed: true
+        - type: icon
+          value: meter-electric-outline
+          x: 5
+          "y": 120
+          size: 28
+          color: black
+        - type: text
+          value: "{{ states('sensor.YOUR_TOTAL_DAY_USAGE') }} kWh"
+          x: 50
+          "y": 125
+          size: 26
+          color: red
+        - type: icon
+          value: meter-gas-outline
+          x: 5
+          "y": 155
+          size: 28
+          color: black
+        - type: text
+          value: "{{ states('sensor.YOUR_DAILY_GAS') }} m³"
+          x: 50
+          "y": 160
+          size: 26
+          color: red
+        - type: line
+          x_start: 0
+          y_start: 190
+          x_end: 200
+          y_end: 190
+          color: black
+          dashed: true
+        - type: icon
+          value: sprout-outline
+          x: 5
+          "y": 200
+          size: 28
+          color: black
+        - type: text
+          value: "{{ states('sensor.YOUR_WASTE_SENSOR_GFT') }}"
+          x: 50
+          "y": 205
+          size: 22
+          color: black
+        - type: icon
+          value: newspaper-remove
+          x: 5
+          "y": 230
+          size: 28
+          color: black
+        - type: text
+          value: "{{ states('sensor.YOUR_WASTE_SENSOR_PAPER') }}"
+          x: 50
+          "y": 235
+          size: 22
+          color: black
+        - type: icon
+          value: trash-can-outline
+          x: 5
+          "y": 260
+          size: 28
+          color: black
+        - type: text
+          value: "{{ states('sensor.YOUR_WASTE_SENSOR_REST') }}"
+          x: 50
+          "y": 265
+          size: 22
+          color: black
+        - type: text
+          value: >-
+            {{ ['Ma','Di','Wo','Do','Vr','Za','Zo'][(now() +
+            timedelta(days=1)).weekday()] }}
+          x: 210
+          "y": 40
+          size: 22
+          color: black
+        - type: icon
+          value: >-
+            {% set icon = states('sensor.YOUR_WEATHER_ENTITY_icon_1d') %}
+            {% if icon == 'clear-day' %} weather-sunny {% elif icon ==
+            'clear-night' %} weather-night {% elif icon == 'rain' %}
+            weather-rainy {% elif icon == 'snow' %} weather-snowy {% elif icon
+            == 'sleet' %} weather-snowy-rainy {% elif icon == 'wind' %}
+            weather-windy {% elif icon == 'fog' %} weather-fog {% elif icon ==
+            'cloudy' %} weather-cloudy {% elif icon == 'partly-cloudy-day' %}
+            weather-partly-cloudy {% elif icon == 'partly-cloudy-night' %}
+            weather-night-partly-cloudy {% else %} weather-cloudy {% endif %}
+          x: 250
+          "y": 40
+          size: 30
+          color: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.YOUR_WEATHER_ENTITY_daytime_high_temperature_1d')
+            | float | round(1) }}°C
+          x: 300
+          "y": 40
+          size: 22
+          color: red
+        - type: text
+          value: "UV: {{ states('sensor.YOUR_WEATHER_ENTITY_uv_index_1d') }}"
+          x: 300
+          "y": 65
+          size: 18
+          color: red
+        - type: text
+          value: >-
+            {{ ['Ma','Di','Wo','Do','Vr','Za','Zo'][(now() +
+            timedelta(days=2)).weekday()] }}
+          x: 210
+          "y": 120
+          size: 22
+          color: black
+        - type: icon
+          value: >-
+            {% set icon = states('sensor.YOUR_WEATHER_ENTITY_icon_2d') %}
+            {% if icon == 'clear-day' %} weather-sunny {% elif icon ==
+            'clear-night' %} weather-night {% elif icon == 'rain' %}
+            weather-rainy {% elif icon == 'snow' %} weather-snowy {% elif icon
+            == 'sleet' %} weather-snowy-rainy {% elif icon == 'wind' %}
+            weather-windy {% elif icon == 'fog' %} weather-fog {% elif icon ==
+            'cloudy' %} weather-cloudy {% elif icon == 'partly-cloudy-day' %}
+            weather-partly-cloudy {% elif icon == 'partly-cloudy-night' %}
+            weather-night-partly-cloudy {% else %} weather-cloudy {% endif %}
+          x: 250
+          "y": 120
+          size: 30
+          color: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.YOUR_WEATHER_ENTITY_daytime_high_temperature_2d')
+            | float | round(1) }}°C
+          x: 300
+          "y": 120
+          size: 22
+          color: red
+        - type: text
+          value: "UV: {{ states('sensor.YOUR_WEATHER_ENTITY_uv_index_2d') }}"
+          x: 300
+          "y": 145
+          size: 18
+          color: red
+        - type: text
+          value: >-
+            {{ ['Ma','Di','Wo','Do','Vr','Za','Zo'][(now() +
+            timedelta(days=3)).weekday()] }}
+          x: 210
+          "y": 200
+          size: 22
+          color: black
+        - type: icon
+          value: >-
+            {% set icon = states('sensor.YOUR_WEATHER_ENTITY_icon_3d') %}
+            {% if icon == 'clear-day' %} weather-sunny {% elif icon ==
+            'clear-night' %} weather-night {% elif icon == 'rain' %}
+            weather-rainy {% elif icon == 'snow' %} weather-snowy {% elif icon
+            == 'sleet' %} weather-snowy-rainy {% elif icon == 'wind' %}
+            weather-windy {% elif icon == 'fog' %} weather-fog {% elif icon ==
+            'cloudy' %} weather-cloudy {% elif icon == 'partly-cloudy-day' %}
+            weather-partly-cloudy {% elif icon == 'partly-cloudy-night' %}
+            weather-night-partly-cloudy {% else %} weather-cloudy {% endif %}
+          x: 250
+          "y": 200
+          size: 30
+          color: black
+        - type: text
+          value: >-
+            {{
+            states('sensor.YOUR_WEATHER_ENTITY_daytime_high_temperature_3d')
+            | float | round(1) }}°C
+          x: 300
+          "y": 200
+          size: 22
+          color: red
+        - type: text
+          value: "UV: {{ states('sensor.YOUR_WEATHER_ENTITY_uv_index_3d') }}"
+          x: 300
+          "y": 225
+          size: 18
+          color: red
+    action: open_epaper_link.drawcustom
+mode: single
